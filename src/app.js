@@ -10,24 +10,16 @@ const logger = require('morgan');
 // const atlas = require('./config/keys');
 require('dotenv').config();
 
-// const indexRouter = require('./routes/index');
-// const usersRouter = require('./routes/users');
+const indexRouter = require('./routes/index');
+const usersRouter = require('./routes/users');
 // const formRouter = require('./routes/form');
-// const auth = require('./routes/auth');
-
+const auth = require('./routes/auth');
 var app = express();
 
 // MIDDLEWAREZ
-// console.log("process.env", process.env);
-
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-
-// // view engine setup
-// app.set('views', path.join(__dirname, 'views'));
-// app.set('view engine', 'ejs');
-
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -38,10 +30,10 @@ app.use(function(req, res, next) {
 });
 app.use(express.static(path.join(__dirname, 'public')));
 
-// app.use('/', indexRouter);
-// app.use('/users', usersRouter);
+app.use('/', indexRouter);
+app.use('/users', usersRouter);
 // app.use('/form', formRouter);
-// app.use('/auth', auth);
+app.use('/auth', auth);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -67,7 +59,7 @@ app.listen(process.env.PORT || 1337, () => {
       console.error("error: " + error);
     }
     else {
-      console.log('connected to db');
+      console.log('connected to db, listening on ');
     }
   })
 
